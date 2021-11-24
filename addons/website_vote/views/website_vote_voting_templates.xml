@@ -1,0 +1,134 @@
+<odoo>
+
+    <template id="website_vote.voting_layout" name="Vote voting Layout" inherit_id="web.frontend_layout" primary="True">
+        <xpath expr="//div[@id='wrapwrap']" position="before">
+            <t t-set="no_livechat" t-value="True"/>
+        </xpath>
+       
+        <xpath expr="//head/t[@t-call-assets][last()]" position="after">
+            <t t-call-assets="website_vote.vote_voting_assets" lazy_load="True"/>
+        </xpath>
+        <xpath expr="//header" position="before">
+            <t t-set="no_header" t-value="True"/>
+            <t t-set="no_footer" t-value="True"/>
+        </xpath>
+        <xpath expr="//header" position="after">
+            <div id="wrap" class="oe_structure oe_empty"/>
+        </xpath>
+        
+    </template>
+
+    <template id="voting_page" name="voting_page">
+        <t t-call="website_vote.voting_layout">
+
+            <div id="wrap" class="wrap" contentEditable="False">
+
+                <div class="position-relative o_voting_main" t-att-voteId='vote_id' t-att-participantItemId='participant_item_id'>
+                    
+                    <div class="container">
+
+                        <div class="load">
+                            <div class="donut">
+                        
+                            </div>
+                        </div>
+                        <a t-attf-href="/vote/{{vote_id}}"  class="o_voting_exit mr-3" ><i class="fa fa-remove"/></a>
+                        <div class="row voting_head p-2">
+                            <div t-attf-class="col-12 col-md-4 col-lg-3">
+                                <div> </div>
+                            </div>
+                            <div t-attf-class="col-12 col-md-8 col-lg-9">
+                                <t t-call="website_vote.voting_head"/>
+                            </div>
+                        </div>
+
+                        <div class="row voting_content ">
+                            <div t-attf-class="voting_left_panel border col-12 col-md-4 col-lg-3 mt-3 mt-md-0">
+                                <t t-call="website_vote.voting_left_panel"/>
+                            </div>
+                            <div t-attf-class="col-12 col-md-8 col-lg-9">
+                                <t t-call="website_vote.voting_image"/>
+                                
+                            </div>
+                        </div>
+                        <div class="row voting_footer">
+                            <div t-attf-class="col-12 col-md-4 col-lg-3 mt-3 mt-md-0 ">
+                                <div t-if="vote_start==True" class="voting_button ">
+                                    <a class="o_voting_button" >Мне нравится <i class="fa fa-thumbs-o-up"/></a>
+                                </div>
+                                <div class="voting_button_finish">
+                                    <div class="o_voting_button_finish">
+                                         <i class="fa fa-star"/>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div t-attf-class="col-12 col-md-8 col-lg-9">
+                                <t t-call="website_vote.voting_footer"/>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+
+                   
+            </div>
+        </t>
+    </template>
+
+    <template id="voting_head" name="voting_head">
+        <div class="text-white o_voting_file_text"></div>
+        
+
+    </template>
+
+    <template id="voting_left_panel" name="voting_left_panel">
+        <!-- <div class="voting_left_panel"> -->
+            <div class="column">
+                <div class="o_voting_autor text-uppercase mt-3 mb-3"> </div>
+                <div class="o_voting_title small mt-1"> </div>
+                <div class="o_voting_department small mt-1"> </div>
+                <div class="o_voting_description_blok mt-3">
+                    <q class="o_voting_description mt-3 row m-0"></q>
+                </div>
+                <!-- <div class="voting_button">
+                    <a class="o_voting_button" >Мне нравится <i class="fa fa-thumbs-o-up"/></a>
+
+                </div> -->
+
+            </div>
+
+        <!-- </div> -->
+    </template>
+
+    <template id="voting_image" name="voting_image">
+
+        <div  class='o_voting_image'> 
+
+                    <a class="o_voting_prev ml-3" ><i class="fa fa-chevron-left"/></a>
+                    <a class="o_voting_next mr-3" ><i class="fa fa-chevron-right"/></a>
+        </div>
+
+    </template>
+
+    <template id="voting_footer" name="voting_footer">
+        <div class="o_voting_count p-2"> </div>
+
+    </template>
+
+
+
+
+
+    
+
+
+
+
+    
+
+
+</odoo>
+
+

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<odoo>
+
+     <menuitem id="menu_vote_root" name="Голосования">
+
+        <menuitem id="vote_first_level_menu" name="Голосования" action="vote_vote_action" sequence="10">
+            
+        </menuitem>
+
+        <menuitem id="vote_participant_first_level_menu" name="Участники" sequence="20">
+            <menuitem id="vote_participant_menu_action" action="vote_vote_participant_action"/>
+            <menuitem id="vote_participant_item_menu_action" action="vote_vote_participant_item_action"/>
+            
+        </menuitem>
+
+        <menuitem id="vote_voting_first_level_menu" name="Голоса" action="vote_vote_voting_action" sequence="20">
+            
+        </menuitem>
+
+       
+
+        <!-- <menuitem id="adbook_branch_first_level_menu" name="Подразделения" action="adbook_branch_action" sequence="30">
+            
+        </menuitem> -->
+
+        <!-- <menuitem id="adbook_actions_first_level_menu" name="Действия" action="adbook_build_wizard_action" sequence="30">
+            
+        </menuitem> -->
+
+
+         
+
+        
+
+    </menuitem>
+
+</odoo>

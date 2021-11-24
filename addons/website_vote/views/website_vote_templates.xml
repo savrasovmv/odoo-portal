@@ -1,0 +1,369 @@
+<odoo>
+
+    <template id="vote_home" name="vote_home">
+        <t t-set="body_classname" t-value="'o_wprofile_body'"/>
+        <t t-call="website.layout">
+        
+            <div id="wrap" class="wrap" contentEditable="False">
+
+                <div class="position-relative">
+                    
+                    <div class="container">
+                        <t t-if="len(vote_reg_list)>0">
+                            <font class="text-o-color-1 mt-3 mb-3" style="">
+                                <b>ИДЕТ РЕГИСТРАЦИЯ</b>
+                            </font>
+                            <t t-call="website_vote.vote_vote_list">
+                                <t t-set="vote_list" t-value="vote_reg_list"/>
+                                    
+                            </t>
+                            
+                        </t>
+                        <t t-if="len(vote_vote_list)>0">
+                            <font class="text-o-color-1 mt-3 mb-3" style="">
+                                <b>ИДЕТ ГОЛОСОВАНИЕ</b>
+                            </font>
+                            <t t-call="website_vote.vote_vote_list">
+                                <t t-set="vote_list" t-value="vote_vote_list"/>
+                                    
+                            </t>
+                            
+                        </t>
+
+                        <t t-if="len(vote_closed_list)>0">
+                            <font class="text-o-color-1 mt-3 mb-3" style="">
+                                <b>ЗАВЕРШЕННЫЕ</b>
+                            </font>
+                            <t t-call="website_vote.vote_vote_list">
+                                <t t-set="vote_list" t-value="vote_closed_list"/>
+                                    
+                            </t>
+                        </t>
+                       
+
+                       
+
+                       
+
+                            
+                    </div>
+                </div>
+
+                    
+            </div>
+
+        </t>
+    </template>
+
+    <template id="vote_vote_list" name="vote_vote_list">
+
+        <div class="row mt-3 mb-3">
+            
+            <t t-foreach="vote_list" t-as="line">
+
+                <div class="pb-4 col-12 col-md-6 col-xl-4">
+                    
+                    <div class="" style="background-image: ">
+                    <a class="text-decoration-none d-block mb-2" t-attf-href="/vote/{{line.id}}">
+
+                        <div class="o_record_cover_container d-flex flex-column o_colored_level o_cc    o_list_cover o_not_editable  rounded overflow-hidden shadow mb-3" style="padding-top: 33%;">
+                            <div class='h-100 w-100 o_record_cover_component o_record_cover_image' t-attf-style="background-image: url(data:image/png;base64,{{line.background_image}}); background-size: cover;background-position: center;
+                                background-repeat: no-repeat; ">
+                            </div>
+                        </div>
+                                
+                        
+                        
+                    </a>
+
+                    </div>
+                    <div>
+                        <a class="text-decoration-none d-block mb-2 h5" t-attf-href="/vote/{{line.id}}">
+                            <t t-esc="line.name"/>
+                            
+                        </a>
+                    </div>
+
+                    <div>
+                        <a class="text-reset text-decoration-none vote_list_text" t-attf-href="/vote/{{line.id}}">
+                            <t t-esc="line.description_text"/>
+
+                        </a>
+                    </div>
+                    
+                </div>
+                
+            </t>
+        </div>
+        
+
+    </template>
+
+    <template id="vote_vote_content" name="vote_vote_content">
+        
+            
+                
+                <div class="container" contentEditable="true">
+                    <div class="oe_structure" />
+                    <div class="p-2 mb-1 bg-white">
+                        <t t-if="line.description"><div t-field='line.description' class="container"/></t>
+                    </div>
+                    
+                </div>
+            
+
+    </template>
+
+
+    <template id="vote_page" name="vote_page">
+        <t t-call="website.layout">
+        
+            <div id="wrap" class="wrap" contentEditable="False">
+
+                <div class="position-relative">
+                    
+                    <div class="container ">
+                        <div class="row">
+                            <div class='d-flex flex-column justify-content-around h-100 w-100 o_record_cover_component o_record_cover_image' t-attf-style="background-image: url(data:image/png;base64,{{vote.background_image}}); background-size: cover;background-position: center;
+                                                    background-repeat: no-repeat; min-height: 35vh !important;">
+                                
+                                <div style="opacity: 0.2;" class="o_record_cover_component o_record_cover_filter oe_black" ></div>
+                                
+                                <div class="d-flex flex-column flex-grow-1 position-relative">
+                                    <div class="o_vote_title container text-center position-relative h-100 d-flex flex-column flex-grow-1 justify-content-around">
+                                        <span t-esc="vote.name"/>
+                                    </div>
+                                </div>
+
+                            </div>
+                             <div class="container m-3 pb-5">
+                                <div class="row ">
+                                    <div t-attf-class="col-12 col-md-4 col-lg-3 mt-3 mt-md-0 bg-while menu">
+                                        <t t-call="website_vote.vote_left_panel"/>
+                                    </div>
+                                    <div t-attf-class="col-12 col-md-8 col-lg-9">
+                                        <t t-call="website_vote.vote_content"/>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- <div class="m-3">
+
+                                <h3> <span t-esc="vote.reg_date_start"/> </h3>
+                                <div t-field="vote.description"/>
+                            </div> -->
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+        </t>    
+
+    </template>
+
+
+
+    <template id="vote_left_panel" name="vote_left_panel">
+        <div class="column bg-white pt-3 pb-3"> 
+            <!-- <h5> Статус </h5> -->
+            <div class="d-flex justify-content-around"> 
+                <t t-if="vote.state=='reg'">
+                    <span class="badge badge-primary o_wevent_badge">
+                        Регистрация участников
+                    </span>
+                    
+                </t>
+                <t t-if="vote.state=='vote'">
+                    <span class="badge badge-success o_wevent_badge">
+                        Идет голосование
+                    </span>
+                    
+                </t>
+                <t t-if="vote.state=='closed'">
+                    <span class="badge badge-pill badge-info o_wevent_badge">
+                        Завершен
+                    </span>
+                    
+                </t>
+            </div>
+                
+            <div class="mt-4"> 
+                <h5 > Организатор </h5>
+                <span t-field="vote.user_id"/>
+            </div>
+            <div class="mt-4">
+                <h5> Регистрация </h5>
+                <span t-field="vote.reg_date_start" t-options='{"format": "dd.MM.yyyy"}'/>
+                <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+                <span t-field="vote.reg_date_end" t-options='{"format": "dd.MM.yyyy"}'/>
+            </div>
+
+            <div class="mt-4">
+                <h5 > Голосование </h5>
+                <span t-field="vote.date_start" t-options='{"format": "dd.MM.yyyy"}'/>
+                <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+                <span t-field="vote.date_end" t-options='{"format": "dd.MM.yyyy"}'/>
+            </div>
+
+            <div class="mt-4">
+                <h5 > Участников:  <span t-esc="len(vote.vote_vote_participant)"/> </h5>
+                <h5 > Работ:  <span t-esc="len(vote.vote_vote_participant_item)"/> </h5>
+                
+            </div>
+
+
+            <t t-if="participant_item">
+                <div t-attf-class="'mt-4 %s' % ('d-flex justify-content-around' if {{len(participant_item)}}>0 else '')">
+                    <div class="column">
+                        <h5> Вы участник: </h5>
+                        <t t-foreach="participant_item" t-as="item">
+                            <div class="column vote_image_preview_block m-2">
+                                <div class="row vote_image_preview d-flex justify-content-center">
+                                    <a t-attf-href="/vote/voting/{{vote.id}}/{{item.id}}" class="text-center text-decoration-none">
+                                        <img t-if="item.image_128 != False" class="w-100 vote_image_preview_img"
+                                             t-attf-src="data:image/png;base64,{{item.image_128}}"/>
+                                    </a> 
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+
+            </t>
+                
+            <t t-else="">
+                <t t-if="vote.state=='reg' and vote.is_reg">
+                    <div t-attf-class="mt-4 d-flex justify-content-around">
+                        <a t-attf-href="/vote/reg/{{vote.id}}" class="mb-2 btn btn-primary">Участвовать</a>
+                    </div>
+                </t>
+            </t>
+                
+         
+           
+            
+        </div>
+    </template>
+
+    <template id="vote_content" name="vote_content">
+        <div class="column bg-white mt-3"> 
+
+        
+            <div t-field="vote.description"/>
+            
+            <div t-if="vote.state=='vote'">
+                <div t-field="vote.description_votes"/>
+
+                <a t-attf-href="/vote/voting/{{vote.id}}" class="mb-2 btn btn-primary">Начать голосование</a>
+            </div>
+            <div t-if="vote.state=='closed'">
+                <div class="mt-3"> 
+                    <div t-field="vote.description_winner_participant"/>
+                </div>
+                
+                <div class="column">
+                    <t t-set="i" t-value="1"/>
+                    <t t-foreach="winner_participant" t-as="participant">
+                        <div>
+                        <div class="row mt-3">
+                            <div class="winner_number col-12 col-md-2 col-lg-2 mt-3 mt-md-0">
+                                <h1 class="mb-0 mt-1 pb-0"> <t t-esc="i"/> </h1> 
+                                <h4 class="mt-0 pt-0"> место </h4>
+                            </div>
+                            <div class="column col-12 col-md-10 col-lg-10 mt-3 mt-md-0">
+                                <div class="text-uppercase mt-1 mb-1"> <h5> <t t-esc="participant.name"/></h5> </div>
+                                <div class="o_voting_title small mt-1"> <t t-esc="participant.employee_id.job_title"/></div>
+                                <div class="o_voting_department small mt-1"> <t t-esc="participant.employee_id.department_id.name"/> </div>
+                            </div>
+                        </div>
+                        </div>
+                        <t t-set="i" t-value="i+1"/>
+                    </t>
+
+                </div>
+
+                <div class="mt-5"> 
+                    <div t-field="vote.description_winner_item"/>
+                </div>
+                
+                <div class="column">
+                    <t t-set="i" t-value="1"/>
+                    <t t-foreach="winner_item" t-as="item">
+                        <div>
+                        <div class="row mt-3">
+                            
+                            <div class="winner_number col-12 col-md-2 col-lg-2 mt-3 mt-md-0">
+                                <h1 class="mb-0 mt-1 pb-0"> <t t-esc="i"/> </h1> 
+                                <h4 class="mt-0 pt-0"> место </h4>
+                            </div>
+                           
+                            <div class="column col-12 col-md-7 col-lg-7 mt-3 mt-md-0">
+                                <div class="text-uppercase mt-1 mb-1"> <h5> <t t-esc="item.name"/></h5> </div>
+                                <div class="o_voting_title small mt-1"> <t t-esc="item.employee_id.job_title"/></div>
+                                <div class="o_voting_department small mt-1"> <t t-esc="item.employee_id.department_id.name"/> </div>
+                            </div>
+                            
+                            <div class="column col-12 col-md-3 col-lg-3 mt-3 mt-md-0">
+                                <div class="column vote_image_preview_block m-2">
+                                    <div class="row vote_image_preview d-flex justify-content-center">
+                                        <a t-attf-href="/vote/voting/{{vote.id}}/{{item.id}}"
+                                            class="text-center text-decoration-none"
+                                            >
+                                                <img t-if="item.image_128 != False" class="w-100 vote_image_preview_img"
+                                                    t-attf-src="data:image/png;base64,{{item.image_128}}"/>
+                                        </a> 
+                                    </div>
+                                </div>
+
+                                <div style="text-align: center;"> <t t-esc="item.file_text"/> </div>
+                            </div>
+                        </div>
+                        </div>
+                        <t t-set="i" t-value="i+1"/>
+                    </t>
+
+                </div>
+                
+            </div>
+
+            <t t-if="len(vote.vote_vote_participant_item) > 0">
+                <div class="mt-3"> <h3> Работы участников: </h3></div>
+            </t>
+
+            <div class="row">
+                <t t-foreach="vote.vote_vote_participant_item" t-as="item">
+
+                    <div class="column vote_image_preview_block m-2">
+
+                        <div class="row vote_image_preview d-flex justify-content-center">
+                            <a t-attf-href="/vote/voting/{{vote.id}}/{{item.id}}"
+                                class="text-center text-decoration-none"
+                                
+                                >
+                                    <img t-if="item.image_128 != False" class="w-100 vote_image_preview_img"
+                                        t-attf-src="data:image/png;base64,{{item.image_128}}"/>
+                                
+                            </a> 
+                            
+                        </div>
+
+                    </div>
+
+                </t>
+        
+            </div>
+        </div>
+    </template>
+
+
+    
+
+
+    
+
+
+</odoo>
+
+

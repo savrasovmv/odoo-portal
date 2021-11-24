@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+
+        <template id="assets_frontend_registration" inherit_id="website.assets_frontend" name="Website registration Frontend Assets">
+            <xpath expr="//link[last()]" position="after">
+                <link rel="stylesheet" type="text/scss" href="/website_registration/static/src/scss/registration.scss" t-ignore="true"/>
+            </xpath>
+            <xpath expr="//script[last()]" position="after">
+                <script type="text/javascript" src="/website_registration/static/src/js/agree.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

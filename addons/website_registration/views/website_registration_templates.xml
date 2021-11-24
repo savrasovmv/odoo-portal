@@ -1,0 +1,132 @@
+<odoo>
+
+
+    <!-- Представление для входа и регистрации без верха и низа -->
+
+    <template id="website_registration.registration_layout" name="Website registration Layout" inherit_id="web.frontend_layout" primary="True">
+        
+       
+        <xpath expr="//div[@id='wrapwrap']" position="before">
+            <t t-set="no_livechat" t-value="True"/>
+        </xpath>
+        <xpath expr="//header" position="replace">
+            <t t-set="no_header" t-value="True"/>
+        </xpath>
+        <xpath expr="//footer" position="replace">
+            <t t-set="no_footer" t-value="True"/>
+        </xpath>
+        
+       
+        
+    </template>
+
+    <!-- <template  id="website_registration.layout_not_auth" name="Website registration Layout not_auth" inherit_id="website.layout">
+            <xpath  expr="//div[@id='wrapwrap']" position="before">
+                <t t-set="no_livechat" t-value="True"/>
+            </xpath>
+            <xpath expr="//header" position="replace">
+                <t t-set="no_header" t-value="True"/>
+            </xpath>
+            <xpath expr="//footer" position="replace">
+                <t t-set="no_footer" t-value="True"/>
+            </xpath>
+        
+        
+    </template> -->
+
+
+
+    <!-- Подменяем основной шаблон на  registration, что бы убрать верх и низ-->
+    <template id="login_registration" inherit_id="website.login_layout" name="website_registration website.login_layout" active="True">
+        
+        <xpath expr="t" position="replace">
+            <t t-call="website_registration.registration_layout">
+                <div class="oe_website_login_container" t-raw="0"/>
+            </t>
+        </xpath>
+    </template>
+
+    
+    <!-- Заменяем Email на логин, ссылки под кнопкой Войти, для перенаправление на форму регистрации -->
+    <template id="website_registration.login" inherit_id="web.login" name="website_registration Sign up - Reset Password" >
+        <xpath expr="//button[@type='submit']" position="after">
+            <div class="justify-content-between mt-2 d-flex small">
+                <a t-attf-href="/web/registration/step1">Регистрация</a>
+                <a t-attf-href="/web/reset_password?{{ keep_query() }}">Сбросить пароль</a>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='form-group field-login']" position="replace">
+            <div class="form-group field-login">
+                <label for="login">Логин</label>
+                <input type="text" placeholder="Логин" name="login" t-att-value="login" id="login" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" autofocus="autofocus" autocapitalize="off"/>
+            </div>
+        </xpath>
+    </template>
+
+
+    
+
+
+    <!-- Регистрация прошла успешна -->
+    <template id="registration_success" name="registration_success page">
+        <t t-call="website_registration.registration_layout">
+            <div id="wrap" class="wrap" contentEditable="False">
+                <div class="position-relative o_voting_main">
+                    
+                    <div class="container p-5">
+                        <h3> Регистрация прошла успешно!</h3>
+                            <div >
+                                <t t-esc="name"/>
+                                , на ваш email
+                                <t t-esc="email"/>
+                                было отправлено письмо с дальнейшими указаниями
+                             </div> 
+                             <div> 
+                                Следуйте инструкциям указанным в письме
+                             </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </t>
+
+    </template>
+
+
+    <!-- Условия использования -->
+    <template id="registration_conditions" name="registration_conditions page">
+        <t t-call="website_registration.registration_layout">
+            <div id="wrap" class="wrap" contentEditable="False">
+                <div class="position-relative o_voting_main">
+                    
+                    <div class="container">
+                         <div class="p-5" t-field="data.conditions"/>
+                    </div>
+                </div>
+            </div>
+
+        </t>
+
+    </template>
+    <template id="registration_confidentiality" name="registration_confidentiality page">
+        <t t-call="website_registration.registration_layout">
+            <div id="wrap" class="wrap" contentEditable="False">
+                <div class="position-relative o_voting_main">
+                    
+                    <div class="container">
+                         <div class="p-5" t-field="data.confidentiality"/>
+                    </div>
+                </div>
+            </div>
+
+        </t>
+
+    </template>
+
+
+
+
+</odoo>
+
+

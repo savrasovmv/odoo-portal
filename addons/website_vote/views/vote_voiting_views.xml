@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<odoo>
+    
+    <record id="vote_vote_voting_view_search" model="ir.ui.view">
+        <field name="name">vote.vote_voting.view.search</field>
+        <field name="model">vote.vote_voting</field>
+        <field name="arch" type="xml">
+            <search string="Search Opportunities">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="vote_vote_voting_view_form" model="ir.ui.view">
+        <field name="name">vote.vote_voting.form</field>
+        <field name="model">vote.vote_voting</field>
+        <field name="arch" type="xml">
+            <form string="Голоса">
+                
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="create_date"/>
+                            <field name="users_id"/>
+                            <field name="employee_id"/>
+                            <field name="vote_vote_id"/>
+                            <field name="vote_vote_participant_id" domain="[('vote_vote_id', '=', vote_vote_id)]"/>
+                            <field name="vote_vote_participant_item_id" domain="[('vote_vote_id', '=', vote_vote_id),
+                                                                                 ('participant_id', '=', vote_vote_participant_id)]"/>
+                            
+                            <field name="score"/>
+                        
+                        </group>
+                    </group>
+                   
+                    
+                   
+                    
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="vote_vote_voting_view_tree" model="ir.ui.view">
+        <field name="name">vote.vote_voting.tree</field>
+        <field name="model">vote.vote_voting</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="create_date"/>
+                <field name="users_id"/>
+                <field name="vote_vote_id"/>
+                <field name="vote_vote_participant_id"/>
+                <field name="score"/>
+            </tree>
+        </field>
+    </record>
+  
+
+    <!-- Configuration/Lead & Opportunities/Lost Reasons Menu -->
+    <record id="vote_vote_voting_action" model="ir.actions.act_window">
+        <field name="name">Голоса</field>
+        <field name="res_model">vote.vote_voting</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p>
+             Создайте новую запись
+          </p>
+        </field>
+    </record>
+
+  
+   
+</odoo>
