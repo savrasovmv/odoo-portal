@@ -8,17 +8,6 @@ from openpyxl import Workbook
 import os, fnmatch
 from openpyxl.styles import Alignment, Border, Side, PatternFill, Font
 
-# class AdbookBranch(models.Model):
-#     _name = "adbook.branch"
-#     _description = "Подразделения"
-#     _order = "sequence"
-
-#     name = fields.Char(u'Наименование в AD', required=True)
-#     adbook_name  = fields.Char(u'Наименование')
-#     ad_branch_id = fields.Many2one("ad.branch", string="Подразделение AD")
-#     company_id = fields.Many2one('res.company', string='Компания')
-#     sequence = fields.Integer(string=u"Сортировка", help="Сортировка", default=10)
-#     date_update = fields.Datetime(string='Обновлено')
 
 
 class AdbookDepartment(models.Model):
@@ -33,12 +22,11 @@ class AdbookDepartment(models.Model):
     adbook_name = fields.Char(u'Наименование в справочнике')
     hr_department_id = fields.Many2one("hr.department", string="HR управления/отделы")
     ad_department_id = fields.Many2one("ad.department", string="AD управления/отделы")
-    ad_branch_id = fields.Many2one("ad.branch", string="AD подразделения")
+    ad_ou_id = fields.Many2one("ad.ou", string="AD подразделения")
     
     # company_id = fields.Many2one('res.company', string='Компания', compute="_get_company", store=True)
     company_id = fields.Many2one('res.company', string='Компания')
     branch_id = fields.Many2one("adbook.department", string="Подразделение(осн)")
-    # branch_id = fields.Many2one("adbook.branch", string="Подразделение")
     parent_id = fields.Many2one("adbook.department", string="Родитель")
     sequence = fields.Integer(string=u"Сортировка", help="Сортировка", default=10)  
     date_update = fields.Datetime(string='Обновлено')
@@ -61,11 +49,6 @@ class AdbookDepartment(models.Model):
             
         return super(AdbookDepartment, self).create(vals)
 
-
-    # @api.depends("branch_id.company_id")
-    # def _get_company(self):
-    #     for dep in self:
-    #         dep.company_id = dep.branch_id.company_id.id
 
 
 class AdbookEmployer(models.Model):

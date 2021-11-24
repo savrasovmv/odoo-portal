@@ -8,61 +8,32 @@ class AdbookBuild(models.AbstractModel):
     def adbook_build(self, full_sync=False):
         date_update = datetime.now()
         
-        # ПОДРЗДЕЛЕНИЯ
-        # ad_branch_list = self.env['ad.branch'].sudo().search([
-        #                         ('active', '=', True),
-        #                         ('is_view_adbook', '=', True),
-        #                     ])
-
-        # for ad_branch in ad_branch_list:
-        #     search_branch = self.env['adbook.branch'].sudo().search([
-        #                         ('ad_branch_id', '=', ad_branch.id),
-        #                     ])
-        #     if len(search_branch)>0:
-        #         search_branch.write({
-        #             'name': ad_branch.name,
-        #             'ad_branch_id': ad_branch.id,
-        #             'date_update': date_update,
-
-        #         })
-        #     else:
-        #         self.env['adbook.branch'].sudo().create({
-        #             'name': ad_branch.name,
-        #             'adbook_name': ad_branch.name,
-        #             'ad_branch_id': ad_branch.id,
-        #             'date_update': date_update,
-
-        #         })
-        # # Удаляем записи которые небыли обновлены
-        # self.env['adbook.branch'].sudo().search([
-        #                         ('date_update', '<', date_update),
-        #                         ('ad_branch_id', '!=', ''),
-        #                     ]).unlink()
-        ad_branch_list = self.env['ad.branch'].sudo().search([
+       
+        ad_ou_list = self.env['ad.ou'].sudo().search([
                                 ('active', '=', True),
                                 ('is_view_adbook', '=', True),
                             ])
-        for ad_branch in ad_branch_list:
+        for ad_ou in ad_ou_list:
             search_dep = self.env['adbook.department'].sudo().search([
-                            ('ad_branch_id', '=', ad_branch.id),
+                            ('ad_ou_id', '=', ad_ou.id),
                         ],limit=1)
             
             if len(search_dep)>0:
                 dep_id = search_dep
                 dep_vals = {
-                    'name': ad_branch.name,
-                    'company_id': ad_branch.company_id.id,
-                    'ad_branch_id': ad_branch.id,
+                    'name': ad_ou.name,
+                    'company_id': ad_ou.company_id.id,
+                    'ad_ou_id': ad_ou.id,
                     'level': 0,
                     'date_update': date_update,
                 }
                 search_dep.write(dep_vals)
             else:
                 dep_vals = {
-                    'name': ad_branch.name,
-                    'adbook_name': ad_branch.name,
-                    'company_id': ad_branch.company_id.id,
-                    'ad_branch_id': ad_branch.id,
+                    'name': ad_ou.name,
+                    'adbook_name': ad_ou.name,
+                    'company_id': ad_ou.company_id.id,
+                    'ad_ou_id': ad_ou.id,
                     'level': 0,
                     'date_update': date_update,
                 }
@@ -75,13 +46,13 @@ class AdbookBuild(models.AbstractModel):
         ad_users_list = self.env['ad.users'].sudo().search([
                                 ('active', '=', True),
                                 ('is_view_adbook', '=', True),
-                                ('branch_id', 'in', ad_branch_list.ids),
+                                ('ou_id', 'in', ad_ou_list.ids),
                             ])
         ad_users_list += self.env['ad.users'].sudo().search([
                                 ('active', '=', False),
                                 ('is_view_adbook', '=', True),
                                 ('is_view_disabled_adbook', '=', True),
-                                ('branch_id', 'in', ad_branch_list.ids),
+                                ('ou_id', 'in', ad_ou_list.ids),
                             ])
         adbook_emloyer = self.env['adbook.employer'].sudo()
         for user in ad_users_list:
@@ -104,7 +75,7 @@ class AdbookBuild(models.AbstractModel):
             
             # Выссшее подразделение 
             department_branch_id = self.env['adbook.department'].sudo().search([
-                                ('ad_branch_id', '=', user.branch_id.id),
+                                ('ad_ou_id', '=', user.ou_id.id),
                             ], limit=1)
             if len(department_branch_id)>0:
                 b_vals = {
@@ -139,7 +110,6 @@ class AdbookBuild(models.AbstractModel):
                             ]).unlink()
 
         
-        print('----------Создание подразделений в сотрудниках')
         adbook_emloyer_list = adbook_emloyer.search([])
         department_list_ids = [] # Список актуальных записей, родителей которых нужно обновить
         for employer in adbook_emloyer_list:
@@ -187,7 +157,6 @@ class AdbookBuild(models.AbstractModel):
                 employer.service_status_end_date = employer.hr_employee_id.service_status_end_date
 
             elif employer.ad_users_id and not employer.is_manual:
-                print('employer', employer.name)
                 search_dep = []
                 if employer.ad_users_id.department_id:
                     search_dep = self.env['adbook.department'].sudo().search([
@@ -230,18 +199,13 @@ class AdbookBuild(models.AbstractModel):
                         employer.department_id = search_dep.id
 
 
-        print('----------Обновляем родителей')
         
         # Обновляем родителей
         # dep_list = self.env['adbook.department'].sudo().browse(hr_department_list_ids)
         dep_list = self.env['adbook.department'].sudo().search([
                                     ('id', 'in', department_list_ids),
                                 ])
-        print(department_list_ids)
-        print(dep_list)
         for dep in dep_list:
-            print(dep.name)
-
             if not dep.hr_department_id:
                 dep.parent_id = dep.branch_id.id
                 continue
@@ -252,7 +216,6 @@ class AdbookBuild(models.AbstractModel):
                 if i==1:
                     current_dep = dep
                 
-                print(str(i)+" - " + hr_parent_id.name)
                 if hr_parent_id.is_view_adbook:
                     search_dep = self.env['adbook.department'].sudo().search([
                                     ('hr_department_id', '=', hr_parent_id.id),
@@ -268,7 +231,6 @@ class AdbookBuild(models.AbstractModel):
 
                         }
                         search_dep.write(dep_vals)
-                        print('Обновил ', dep_id)
 
                     else:
                         dep_vals = {
@@ -280,7 +242,6 @@ class AdbookBuild(models.AbstractModel):
 
                         }
                         dep_id = self.env['adbook.department'].sudo().create(dep_vals)
-                        print('             Создал ', dep_id)
                     
                     
                     current_dep.parent_id = dep_id.id
@@ -299,7 +260,7 @@ class AdbookBuild(models.AbstractModel):
                                 '|','|',
                                 ('hr_department_id', '!=', ''),
                                 ('ad_department_id', '!=', ''),
-                                ('ad_branch_id', '!=', ''),
+                                ('ad_ou_id', '!=', ''),
                             ]).unlink()
 
         

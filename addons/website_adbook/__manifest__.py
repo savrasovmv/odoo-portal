@@ -32,17 +32,12 @@
     # always loaded
     'data': [
         'views/adbook_employer_views.xml',
-        # 'views/adbook_branch_views.xml',
         'views/adbook_department_views.xml',
         'wizard/adbook_build_wizard_views.xml',
         'views/adbook_menu.xml',
         'security/ad_security.xml',
         'security/ir.model.access.csv',
         'views/assets.xml',
-        # 'views/templates_head.xml',
-        # 'views/templates_list_search.xml',
-        # 'views/templates_list.xml',
-        # 'views/templates.xml',
         'views/website_adbook_templates.xml',
     ],
     

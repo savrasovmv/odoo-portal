@@ -24,12 +24,12 @@
                     </group>
 
                     <group string="Основные">
-                        <field name="name" attrs="{'readonly': [('ad_branch_id', '!=', False)]}"/>
-                        <field name="company_id" attrs="{'readonly': [('ad_branch_id', '!=', False)]}"/>
+                        <field name="name" attrs="{'readonly': [('ad_ou_id', '!=', False)]}"/>
+                        <field name="company_id" attrs="{'readonly': [('ad_ou_id', '!=', False)]}"/>
                     </group>
                     <group string="Связи">
                         <field name="date_update" attrs="{'readonly': True}"/>
-                        <field name="ad_branch_id" attrs="{'readonly': True}"/>
+                        <field name="ad_ou_id" attrs="{'readonly': True}"/>
                     </group>
 
                 </sheet>
