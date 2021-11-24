@@ -26,7 +26,6 @@
         <field name="arch" type="xml">
             <form string="Пользователь">
                 <header>
-                    <button name="action_update_from_ldap" type="object" string="Обновить из AD"/>
                     
                 </header>
                 <sheet>
