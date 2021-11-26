@@ -27,17 +27,17 @@ class HrRecruitmentDoc(models.Model):
             if line.employee_id:
                 line.name = line.employee_id.name
 
-    @api.model
-    def create(self, vals):
-        doc = super(HrRecruitmentDoc, self).create(vals)
-        if vals.get('posted'):
-            self.env['sync.tasks'].sudo().create_task(self)
-        return doc
+    # @api.model
+    # def create(self, vals):
+    #     doc = super(HrRecruitmentDoc, self).create(vals)
+    #     if vals.get('posted'):
+    #         self.env['sync.tasks'].sudo().create_task(self)
+    #     return doc
     
-    def write(self, vals):
-        doc = super(HrRecruitmentDoc, self).write(vals)
-        self.env['sync.tasks'].sudo().update_task(self)
-        return doc
+    # def write(self, vals):
+    #     doc = super(HrRecruitmentDoc, self).write(vals)
+    #     self.env['sync.tasks'].sudo().update_task(self)
+    #     return doc
 
 
 class HrTerminationDoc(models.Model):
@@ -67,17 +67,17 @@ class HrTerminationDoc(models.Model):
             if line.employee_id:
                 line.name = line.employee_id.name
 
-    @api.model
-    def create(self, vals):
-        doc = super(HrTerminationDoc, self).create(vals)
-        if vals.get('posted'):
-            self.env['sync.tasks'].sudo().create_task(self)
-        return doc
+    # @api.model
+    # def create(self, vals):
+    #     doc = super(HrTerminationDoc, self).create(vals)
+    #     if vals.get('posted'):
+    #         self.env['sync.tasks'].sudo().create_task(self)
+    #     return doc
     
-    def write(self, vals):
-        doc = super(HrTerminationDoc, self).write(vals)
-        self.env['sync.tasks'].sudo().update_task(self)
-        return doc
+    # def write(self, vals):
+    #     doc = super(HrTerminationDoc, self).write(vals)
+    #     self.env['sync.tasks'].sudo().update_task(self)
+    #     return doc
 
     # def write(self, vals):
     #     result = super(Survey, self).write(vals)
