@@ -8,7 +8,7 @@
     "website": "https://github.com/savrasovmv/",
     "category": "Human Resources",
     "summary": "Дополнительные поля ",
-    "depends": ["hr", "ad_base"],
+    "depends": ["hr", "ad_base_min"],
     "data": [
         "views/hr_employee.xml",
         "views/hr_invitation_mail_templates.xml",
