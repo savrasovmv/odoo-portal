@@ -84,6 +84,9 @@ class AdUsers(models.Model):
     object_SID = fields.Char(u'AD objectSID')
     photo = fields.Binary('Фото', default=False)
 
+    is_view_adbook = fields.Boolean(string='Отоброжать в справочнике контактов', default=True)
+    is_view_disabled_adbook = fields.Boolean(string='Отоброжать в справочнике контактов даже если отключена', default=False)
+
 
     def get_employee_by_name(self):
         """Связывает пользователей АД с сотрудниками"""
