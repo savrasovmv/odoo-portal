@@ -311,6 +311,7 @@ class HrEmployee(models.Model):
                 line.service_status = 'fired'
                 line.service_termination_date = fired.service_termination_date
                 line.is_fired = True
+                line.active = False
             else:
                 line.service_termination_date = False
                 line.is_fired = False

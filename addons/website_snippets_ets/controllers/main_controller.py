@@ -18,6 +18,7 @@ class WebsiteVideoWidget(http.Controller):
         date = datetime.today()
 
         employers = http.request.env['hr.employee'].sudo().search([
+                            ('is_fired', '=', False),
                             ('birthday_day', '=', date.day),
                             ('birthday_month', '=', date.month),
                             ('active', '=', True),
