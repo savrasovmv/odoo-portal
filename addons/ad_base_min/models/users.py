@@ -14,6 +14,8 @@ class AdOU(models.Model):
     active = fields.Boolean('Active', default=True)
     is_default = fields.Boolean(string='AD контейнер по умолчанию', help='Если установлено, новые пользователи не вошедшие не в одну группу будут создаваться тут')
     hr_department_id = fields.Many2one("hr.department", string="HR Подразделене")
+    is_view_adbook = fields.Boolean(string='Отоброжать в справочнике контактов')
+
 
 
 
