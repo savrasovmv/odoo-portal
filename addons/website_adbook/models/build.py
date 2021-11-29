@@ -22,7 +22,6 @@ class AdbookBuild(models.AbstractModel):
                 dep_id = search_dep
                 dep_vals = {
                     'name': ad_ou.name,
-                    'company_id': ad_ou.company_id.id,
                     'ad_ou_id': ad_ou.id,
                     'level': 0,
                     'date_update': date_update,
@@ -32,7 +31,6 @@ class AdbookBuild(models.AbstractModel):
                 dep_vals = {
                     'name': ad_ou.name,
                     'adbook_name': ad_ou.name,
-                    'company_id': ad_ou.company_id.id,
                     'ad_ou_id': ad_ou.id,
                     'level': 0,
                     'date_update': date_update,
