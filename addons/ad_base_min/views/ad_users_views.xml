@@ -16,6 +16,7 @@
                 <filter string="Активные" name="inactive" domain="[('active', '=', True)]"/>
                 <filter string="Отключенные" name="inactive" domain="[('active', '=', False)]"/>
                 <filter string="Все" name="inactive" domain="['|',('active', '=', False), ('active', '=', True)]"/>
+                
             </search>
         </field>
     </record>

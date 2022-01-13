@@ -1,5 +1,5 @@
 <odoo>
-    <template id="website_index" name="website_index">
+    <template id="website_index" name="Справочник контктов">
         <t t-set="body_classname" t-value="'o_wslides_body'"/>
         <t t-call="website.layout">
         
