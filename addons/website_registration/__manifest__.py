@@ -26,7 +26,7 @@
     # any module necessary for this one to work correctly
     'depends': [
                 'base',
-                'ad_base',
+                'ad_base_min',
                 'website',
                 'auth_password_policy',
                 'auth_password_policy_signup',
