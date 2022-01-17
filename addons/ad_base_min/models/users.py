@@ -115,7 +115,7 @@ class AdUsers(models.Model):
                         empl = search_empl
 
                 user.employee_id = empl.id
-                user.birthday = empl.birthday
+                # user.birthday = empl.birthday
             
                 # Для каждого найденого сотрудника меняем данные 
                 for empl in empl_list:
