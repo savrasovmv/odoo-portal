@@ -396,6 +396,22 @@ class HrEmployee(models.Model):
                     partner_id.image_1920 = record.image_1920
                     partner_id.active = False if record.is_fired else True
 
+    def action_set_user_by_employee(self):
+        """Связывает сотрудника с пользователем и партнером"""
+        for record in self:
+            if record.employment_type_1c == "Основное место работы":
+                user = self.env['res.users'].search([
+                    ('name', '=', record.name),
+                    '|',
+                    ('active', '=', True),
+                    ('active', '=', False)
+                ], limit=1)
+
+                if len(user)>0:
+                    record.user_id = user.id
+
+
+
 
 
     @api.model
