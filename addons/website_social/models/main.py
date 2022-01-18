@@ -16,8 +16,7 @@ class Social(models.Model):
     subtitle = fields.Char('Подзаголовок', translate=True)
 
     description = fields.Text(
-        "Описание", translate=True, sanitize=False,  # TDE FIXME: find a way to authorize videos
-        help="Описание Сообщества, которое будет отображаться на странице Сообщества")
+        "Описание", translate=True, help="Описание Сообщества, которое будет отображаться на странице Сообщества")
 
     description_form = fields.Html(
         "Описание формы", translate=True, sanitize=False,  # TDE FIXME: find a way to authorize videos
