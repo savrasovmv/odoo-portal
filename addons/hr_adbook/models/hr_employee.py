@@ -401,7 +401,8 @@ class HrEmployee(models.Model):
     def action_set_user_by_employee(self):
         """Связывает сотрудника с пользователем и партнером"""
         print("+++++ action_set_user_by_employee ", self)
-        for record in self:
+        emp_list = self.search(['user_id', '=', False])
+        for record in emp_list:
             print("Связывает сотрудника ", record.name)
             if record.employment_type_1c == "Основное место работы":
                 user = self.env['res.users'].search([
