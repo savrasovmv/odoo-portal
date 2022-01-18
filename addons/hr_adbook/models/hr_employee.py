@@ -397,13 +397,10 @@ class HrEmployee(models.Model):
                     partner_id.active = False if record.is_fired else True
 
 
-    @api.model
+    
     def action_set_user_by_employee(self):
         """Связывает сотрудника с пользователем и партнером"""
-        print("+++++ action_set_user_by_employee ", self)
-        emp_list = self.search(['user_id', '=', False])
-        for record in emp_list:
-            print("Связывает сотрудника ", record.name)
+        for record in self:
             if record.employment_type_1c == "Основное место работы":
                 user = self.env['res.users'].search([
                     ('name', '=', record.name),
@@ -411,7 +408,6 @@ class HrEmployee(models.Model):
                     ('active', '=', True),
                     ('active', '=', False)
                 ], limit=1)
-                print("Нашли пользователя ", user.name)
                 if len(user)>0:
                     record.user_id = user.id
 
