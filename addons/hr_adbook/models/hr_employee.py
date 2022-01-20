@@ -459,4 +459,10 @@ class HrEmployee(models.Model):
         """Действие. Устанавливает у все сотрудников is_collective_work_email=False"""
         records = self.search([])
         for record in records:
-            record.is_collective_work_email = False   
+            record.is_collective_work_email = False  
+
+
+    # Отключить действие синхронизации при изменении пользователя
+    # функция _sync_user находится в HR модуле hr_employee.py
+    def _sync_user(self, user, employee_has_image=False):
+        return {} 
